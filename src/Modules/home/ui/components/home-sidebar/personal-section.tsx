@@ -36,7 +36,7 @@ const PersonalSection = () => {
     <SidebarGroup>
       <SidebarGroupLabel>You</SidebarGroupLabel>
       <SidebarGroupContent>
-        <SidebarMenu>
+        <SidebarMenu className="flex items-start gap-2">
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
