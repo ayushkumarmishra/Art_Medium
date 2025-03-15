@@ -1,19 +1,8 @@
-import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "../init";
-export const appRouter = createTRPCRouter({
-  hello: protectedProcedure
-    .input(
-      z.object({
-        text: z.string(),
-      })
-    )
-    .query(({ input, ctx }) => {
-      const dbUser = ctx.user;
-      console.log(dbUser);
+import { createTRPCRouter } from "../init";
+import { categoriesRouter } from "@/Modules/categories/server/procedures";
 
-      return {
-        greeting: `hello ${input.text}`,
-      };
-    }),
+export const appRouter = createTRPCRouter({
+  categories: categoriesRouter,
 });
+
 export type AppRouter = typeof appRouter;
