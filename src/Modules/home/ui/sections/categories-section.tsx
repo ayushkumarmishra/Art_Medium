@@ -18,9 +18,15 @@ const CategorizationSection = ({ categoryId }: CategoriesSectionProps) => {
   }));
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense
+      fallback={<FilterCarousel isLoading data={[]} onSelect={() => {}} />}
+    >
       <ErrorBoundary fallback={<p>Error...</p>}>
-        <FilterCarousel value={categoryId} data={data} />
+        <FilterCarousel
+          onSelect={(x) => console.log(x)}
+          value={categoryId}
+          data={data}
+        />
       </ErrorBoundary>
     </Suspense>
   );

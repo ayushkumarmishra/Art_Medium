@@ -8,11 +8,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
+import { Skeleton } from "./ui/skeleton";
 
 interface FilterCarouselProps {
   value?: string | null;
   isLoading?: boolean;
-  onSelect?: (value: string | null) => void;
+  onSelect: (value: string | null) => void;
   data: {
     value: string;
     label: string;
@@ -35,18 +36,38 @@ export const FilterCarousel = ({
         className="w-full px-12"
       >
         <CarouselContent className="-ml-3">
-          <CarouselItem className="pl-3 basis-auto">
-            <Badge
-              variant={!value ? "default" : "secondary"}
-              className="rounded-lg px-3 py-1 cursor-pointer whitespace-nowrap text-sm"
+          {!isLoading && (
+            <CarouselItem
+              className="pl-3 basis-auto"
+              onClick={() => onSelect(null)}
             >
-              All
-            </Badge>
-          </CarouselItem>
+              <Badge
+                variant={!value ? "default" : "secondary"}
+                className="rounded-lg px-3 py-1 cursor-pointer whitespace-nowrap text-sm"
+              >
+                All
+              </Badge>
+            </CarouselItem>
+          )}
+
+          {/* If loading state then show the skeleton object */}
+
+          {isLoading &&
+            Array.from({ length: 14 }).map((_, index) => (
+              <CarouselItem key={index} className="pl-3 basis-auto">
+                <Skeleton className="rounded-lg px-3 py-1 h-full w-[100px] font-semibold text-sm">
+                  &nbsp;
+                </Skeleton>
+              </CarouselItem>
+            ))}
 
           {!isLoading &&
             data.map((item) => (
-              <CarouselItem key={item.value} className="pl-3 basis-auto">
+              <CarouselItem
+                key={item.value}
+                className="pl-3 basis-auto"
+                onClick={() => onSelect(item.value)}
+              >
                 <Badge
                   variant={value === item.value ? "default" : "secondary"}
                   className="rounded-lg px-3 py-1 cursor-pointer whitespace-nowrap text-sm"
