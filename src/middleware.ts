@@ -4,7 +4,7 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
  * This is created to protect the routes that we want to protect or basically is only be showned to authenticated users
  */
 
-const isProtectedRoute = createRouteMatcher(["/protected(.*)"]);
+const isProtectedRoute = createRouteMatcher(["/studio(.*)"]);
 //this (.*) helps to protect the subroute if we have for the protected page. eg : protected/subroute
 
 export default clerkMiddleware(async (auth, req) => {
