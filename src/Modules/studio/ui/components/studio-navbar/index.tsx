@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AuthButton } from "@/Modules/auth/ui/components/auth-button";
+import StudioUploadModal from "../studio-upload-modal";
 
 export const StudioNavbar = () => {
   return (
@@ -24,6 +25,7 @@ export const StudioNavbar = () => {
         <div className="flex-1"></div>
 
         <div className="flex item-center gap-4 flex-shrink-0">
+          <StudioUploadModal />
           <AuthButton />
         </div>
       </div>
