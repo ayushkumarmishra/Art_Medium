@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AuthButton } from "@/Modules/auth/ui/components/auth-button";
-import StudioUploadModal from "../studio-upload-modal";
+import { StudioUploadModal } from "../studio-upload-modal";
 
 export const StudioNavbar = () => {
   return (
