@@ -1,6 +1,7 @@
 "use client";
 
 import { ResponsiveModal } from "@/components/responsive-dialog";
+import { StudioUploader } from "@/components/studio-uploader";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { Loader2Icon, PlusIcon } from "lucide-react";
@@ -24,10 +25,15 @@ export const StudioUploadModal = () => {
     <>
       <ResponsiveModal
         title="Upload a video"
-        open={!!create.data}
+        open={!!create.data?.url}
         onOpenChange={() => create.reset()}
       >
-        <p>This will be an uploader</p>
+        {/* <p>This will be an uploader</p> */}
+        {create.data?.url ? (
+          <StudioUploader endPoint={create.data.url} onSuccess={() => {}} />
+        ) : (
+          <Loader2Icon />
+        )}
       </ResponsiveModal>
 
       <Button
