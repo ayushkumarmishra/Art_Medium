@@ -49,7 +49,10 @@ export const StudioUploader = ({
         <span slot="separator" className="hidden" />
       </MuxUploaderDrop>
 
-      <MuxUploaderStatus muxUploader={UPLOADER_ID} className="text-sm" />
+      <MuxUploaderStatus
+        muxUploader={UPLOADER_ID}
+        className="text-sm flex flex-col justify-center text-center"
+      />
 
       <MuxUploaderProgress
         muxUploader={UPLOADER_ID}

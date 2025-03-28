@@ -55,6 +55,9 @@ export const videos = pgTable("videos", {
   muxPlaybackId: text("mux_playback_id").unique(),
   muxTrackId: text("mux_track_id").unique(),
   muxTrackStatus: text("mux_track_status"),
+
+  // This is used to store the thumbnail url when the mux webhook is used to generate the thumnail for a video uploaded through mux.
+  thumbnailUrl: text("thumbnail_url"),
 });
 
 //used realtions here because it helps at the application level but can not be neccessary as i am doing the same thing above with references.
