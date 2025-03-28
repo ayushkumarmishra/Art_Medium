@@ -58,6 +58,8 @@ export const videos = pgTable("videos", {
 
   // This is used to store the thumbnail url when the mux webhook is used to generate the thumnail for a video uploaded through mux.
   thumbnailUrl: text("thumbnail_url"),
+  // This is for showing the preview image for the thumbnail.
+  previewUrl: text("preview_url"),
 });
 
 //used realtions here because it helps at the application level but can not be neccessary as i am doing the same thing above with references.
