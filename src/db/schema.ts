@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
 import {
   integer,
+  pgEnum,
   pgTable,
   text,
   timestamp,
@@ -34,6 +35,11 @@ export const categories = pgTable(
   (t) => [uniqueIndex("name_idx").on(t.name)]
 );
 
+export const videosVisibility = pgEnum("videos_visibility", [
+  "private",
+  "public",
+]);
+
 export const videos = pgTable("videos", {
   id: uuid("id").primaryKey().defaultRandom(),
   title: text("title").notNull(),
@@ -63,6 +69,9 @@ export const videos = pgTable("videos", {
   previewUrl: text("preview_url"),
   //This is to show the duration on videos basically the video duration preview
   duration: integer("duration"),
+
+  // To represent the visibility of the video.
+  visibility: videosVisibility("visibility").default("private").notNull(),
 });
 
 //used realtions here because it helps at the application level but can not be neccessary as i am doing the same thing above with references.

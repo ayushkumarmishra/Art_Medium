@@ -83,7 +83,11 @@ export const VideosSectionSuspense = () => {
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell>Visibility</TableCell>
+                    <TableCell>
+                      <div className="text-sm">
+                        {snakeCaseToTitle(video.visibility)}
+                      </div>
+                    </TableCell>
                     <TableCell>
                       <div className="flex flex-col items-centers">
                         {snakeCaseToTitle(video.muxStatus || "error")}
