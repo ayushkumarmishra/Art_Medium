@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm";
 import {
+  integer,
   pgTable,
   text,
   timestamp,
@@ -60,6 +61,8 @@ export const videos = pgTable("videos", {
   thumbnailUrl: text("thumbnail_url"),
   // This is for showing the preview image for the thumbnail.
   previewUrl: text("preview_url"),
+  //This is to show the duration on videos basically the video duration preview
+  duration: integer("duration"),
 });
 
 //used realtions here because it helps at the application level but can not be neccessary as i am doing the same thing above with references.
