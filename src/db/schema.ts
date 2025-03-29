@@ -1,5 +1,7 @@
 import { relations } from "drizzle-orm";
 import {
+  integer,
+  pgEnum,
   pgTable,
   text,
   timestamp,
@@ -33,6 +35,11 @@ export const categories = pgTable(
   (t) => [uniqueIndex("name_idx").on(t.name)]
 );
 
+export const videosVisibility = pgEnum("videos_visibility", [
+  "private",
+  "public",
+]);
+
 export const videos = pgTable("videos", {
   id: uuid("id").primaryKey().defaultRandom(),
   title: text("title").notNull(),
@@ -55,6 +62,16 @@ export const videos = pgTable("videos", {
   muxPlaybackId: text("mux_playback_id").unique(),
   muxTrackId: text("mux_track_id").unique(),
   muxTrackStatus: text("mux_track_status"),
+
+  // This is used to store the thumbnail url when the mux webhook is used to generate the thumnail for a video uploaded through mux.
+  thumbnailUrl: text("thumbnail_url"),
+  // This is for showing the preview image for the thumbnail.
+  previewUrl: text("preview_url"),
+  //This is to show the duration on videos basically the video duration preview
+  duration: integer("duration"),
+
+  // To represent the visibility of the video.
+  visibility: videosVisibility("visibility").default("private").notNull(),
 });
 
 //used realtions here because it helps at the application level but can not be neccessary as i am doing the same thing above with references.
