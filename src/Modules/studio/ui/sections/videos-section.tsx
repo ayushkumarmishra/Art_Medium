@@ -18,10 +18,11 @@ import { Globe2Icon, LockIcon } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { VideoSectionSkeleton } from "./video-section-skeleton";
 
 export const VideosSection = () => {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<VideoSectionSkeleton />}>
       <ErrorBoundary fallback={<p>Error....</p>}>
         <VideosSectionSuspense />
       </ErrorBoundary>
@@ -49,9 +50,9 @@ export const VideosSectionSuspense = () => {
               <TableHead>Visibility</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Date</TableHead>
-              <TableHead>Views</TableHead>
-              <TableHead>Comments</TableHead>
-              <TableHead>Likes</TableHead>
+              <TableHead className="text-right">Views</TableHead>
+              <TableHead className="text-right">Comments</TableHead>
+              <TableHead className="text-right pr-6">Likes</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -64,7 +65,7 @@ export const VideosSectionSuspense = () => {
                   legacyBehavior
                 >
                   <TableRow className="cursor-pointer">
-                    <TableCell>
+                    <TableCell className="pl-6">
                       <div className="flex items-center gap-4">
                         <div className="relative aspect-video w-36 shrink-0">
                           <VideoThumbnail
@@ -95,18 +96,22 @@ export const VideosSectionSuspense = () => {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="flex flex-col items-centers">
+                      <div className="flex items-centers">
                         {snakeCaseToTitle(video.muxStatus || "error")}
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="flex items-center text-sm truncate">
+                      <div className="text-sm truncate">
                         {format(new Date(video.createdAt), "dd MMM yyyy")}
                       </div>
                     </TableCell>
-                    <TableCell>views</TableCell>
-                    <TableCell>comments</TableCell>
-                    <TableCell>likes</TableCell>
+                    <TableCell className="text-right text-sm">views</TableCell>
+                    <TableCell className="text-right text-sm">
+                      comments
+                    </TableCell>
+                    <TableCell className="text-right text-sm pr-6">
+                      likes
+                    </TableCell>
                   </TableRow>
                 </Link>
               ))}
