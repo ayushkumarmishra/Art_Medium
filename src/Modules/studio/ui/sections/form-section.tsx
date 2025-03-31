@@ -45,6 +45,7 @@ import { toast } from "sonner";
 import { VideoPlayer } from "@/Modules/videos/ui/components/video-player";
 import Link from "next/link";
 import { snakeCaseToTitle } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface FormSectionProps {
   videoId: string;
@@ -61,6 +62,7 @@ export const FormSection = ({ videoId }: FormSectionProps) => {
 };
 
 const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
+  const router = useRouter();
   const [video] = trpc.studio.getOne.useSuspenseQuery({
     id: videoId,
   });
@@ -68,6 +70,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
   const [categories] = trpc.categories.getMany.useSuspenseQuery();
 
   const utils = trpc.useUtils();
+
   const update = trpc.videos.update.useMutation({
     onSuccess: () => {
       utils.studio.getMany.invalidate();
@@ -81,6 +84,17 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
     },
   });
 
+  const remove = trpc.videos.remove.useMutation({
+    onSuccess: () => {
+      utils.studio.getMany.invalidate();
+      toast.success("Video removed successfuly");
+      router.push("/studio");
+    },
+    onError: () => {
+      toast.error("Something went wrong");
+    },
+  });
+
   const form = useForm<z.infer<typeof videoUpdateSchema>>({
     resolver: zodResolver(videoUpdateSchema),
     defaultValues: video,
@@ -88,6 +102,12 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
 
   const onSubmit = (data: z.infer<typeof videoUpdateSchema>) => {
     update.mutate(data);
+  };
+
+  const onRemove = () => {
+    remove.mutate({
+      id: videoId,
+    });
   };
 
   // will change at the time of deployment
@@ -129,7 +149,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
               </DropdownMenuTrigger>
 
               <DropdownMenuContent align="end">
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={onRemove}>
                   <TrashIcon className="size-4 mr-2" />
                   Delete
                 </DropdownMenuItem>
