@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { VideoPlayer } from "@/Modules/videos/ui/components/video-player";
 
 interface FormSectionProps {
   videoId: string;
@@ -172,6 +173,16 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                 </FormItem>
               )}
             />
+          </div>
+          <div className="flex flex-col gap-y-8 lg: col-span-2">
+            <div className="flex flex-col gap-4 bg-[#F9F9F9] rounded-xl overflow-hidden h-fit">
+              <div className="aspect-video overflow-hidden relative">
+                <VideoPlayer
+                  playbackId={video.muxPlaybackId}
+                  thumbnailUrl={video.thumbnailUrl}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </form>
