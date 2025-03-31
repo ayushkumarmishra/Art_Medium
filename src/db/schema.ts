@@ -9,6 +9,12 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 
+import {
+  createSelectSchema,
+  createInsertSchema,
+  createUpdateSchema,
+} from "drizzle-zod";
+
 export const users = pgTable(
   "users",
   {
@@ -73,6 +79,10 @@ export const videos = pgTable("videos", {
   // To represent the visibility of the video.
   visibility: videosVisibility("visibility").default("private").notNull(),
 });
+
+export const videoInsertSchema = createInsertSchema(videos);
+export const videoUpdateSchema = createUpdateSchema(videos);
+export const videoSelectSchema = createSelectSchema(videos);
 
 //used realtions here because it helps at the application level but can not be neccessary as i am doing the same thing above with references.
 //can also be removed

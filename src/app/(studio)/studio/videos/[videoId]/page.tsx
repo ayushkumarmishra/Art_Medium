@@ -14,6 +14,8 @@ const Page = async ({ params }: PageProps) => {
     id: videoId,
   });
 
+  void trpc.categories.getMany.prefetch();
+
   return (
     <HydrateClient>
       <VideoView videoId={videoId} />

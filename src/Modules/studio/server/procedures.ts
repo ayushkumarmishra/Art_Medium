@@ -59,6 +59,7 @@ export const studioRouter = createTRPCRouter({
         nextCursor,
       };
     }),
+
   //This is made to get the details of individual videos inside the studio.
   getOne: protectedProcedure
     .input(
@@ -83,4 +84,7 @@ export const studioRouter = createTRPCRouter({
 
       return video;
     }),
+
+
+    
 });
