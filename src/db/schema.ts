@@ -78,6 +78,10 @@ export const videos = pgTable("videos", {
 
   // To represent the visibility of the video.
   visibility: videosVisibility("visibility").default("private").notNull(),
+
+  // This is done for the uploadthing refactoring to remove the thumbnail effectively
+  thumbnailKey: text("thumbnail_key"),
+  previewKey: text("preview_key"),
 });
 
 export const videoInsertSchema = createInsertSchema(videos);
