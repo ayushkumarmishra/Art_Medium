@@ -80,13 +80,4 @@ export const { POST } = serve(async (context) => {
       .set({ title: title ?? video.title })
       .where(and(eq(videos.id, videoId), eq(videos.userId, userId)));
   });
-
-  await context.run("update-video", async () => {
-    await db
-      .update(videos)
-      .set({
-        title,
-      })
-      .where(and(eq(videos.id, videoId), eq(videos.userId, userId)));
-  });
 });

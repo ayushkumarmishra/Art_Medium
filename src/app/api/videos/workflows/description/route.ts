@@ -33,7 +33,6 @@ export const { POST } = serve(async (context) => {
     return existingVideo;
   });
 
-  //taking out the trnscript from the mux video asset
   const transcript = await context.run("get-transcript", async () => {
     const trackURL = `https://stream.mux.com/${video.muxPlaybackId}/text/${video.muxTrackId}.txt`;
 
@@ -50,6 +49,7 @@ export const { POST } = serve(async (context) => {
     apiKey: process.env.GITHUB_TOKEN!,
     baseURL: "https://models.inference.ai.azure.com",
   });
+
   const response = await context.run("generate-description", async () => {
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -60,8 +60,6 @@ export const { POST } = serve(async (context) => {
           content: transcript,
         },
       ],
-      // temperature: 0.7,
-      // max_tokens: 256,
     });
 
     return response;
@@ -77,15 +75,6 @@ export const { POST } = serve(async (context) => {
     await db
       .update(videos)
       .set({ description: description ?? video.description })
-      .where(and(eq(videos.id, videoId), eq(videos.userId, userId)));
-  });
-
-  await context.run("update-video", async () => {
-    await db
-      .update(videos)
-      .set({
-        description,
-      })
       .where(and(eq(videos.id, videoId), eq(videos.userId, userId)));
   });
 });
